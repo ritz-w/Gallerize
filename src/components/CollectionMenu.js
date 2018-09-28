@@ -2,17 +2,19 @@ import React, { Component } from 'react';
 import { Dropdown } from 'semantic-ui-react'
 
 
-const CollectionMenu = (props) => {
-    
-    const createCollectionOptions = (collectionNames) => {
+
+export default class CollectionMenu extends Component {
+
+    createCollectionOptions = (collectionNames) => {
         return collectionNames.map(name => ({key: name, value: name, text: name})) 
     }
-    // countryOptions = [ { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' }, ...  ]
 
-    return (
-        <Dropdown placeholder='Select Collection' fluid multiple search selection options={createCollectionOptions(props.collectionNames)} />
-    )
+    render() {
+        return (
+            <Dropdown placeholder='Select Collection' onChange={(event, data) => this.props.filterByCollection(data.value)} fluid multiple search selection options={this.createCollectionOptions(this.props.collectionNames)} className="combo-box" />
+        )
+    }
+
 }
 
 
-export default CollectionMenu

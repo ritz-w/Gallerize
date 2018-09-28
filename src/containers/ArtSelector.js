@@ -1,54 +1,79 @@
 import React, { Component } from 'react';
-import { Grid, Image } from 'semantic-ui-react'
+import { Grid, Icon } from 'semantic-ui-react'
 import CollectionMenu from '../components/CollectionMenu'
+import ArtworkCard from '../components/ArtworkCard'
+import './ArtSelector.css'
 
 export default class ArtSelector extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            artworks: [],
-            collectionNames: [],
-            displayedArtworks: []
+            prevButtonShown: false,
+            nextButtonShown: true
         }
     }
 
-    componentDidMount() {
-        fetch('http://localhost:3000/artworks')
-        .then(res => res.json())
-        .then(data => this.setState({ artworks: data }))
-        .then(() => {
-            const collectionNames = this.state.artworks.map(artwork => artwork.collection).unique()
-            this.setState({collectionNames: collectionNames}, () => console.log(this.state))
+    renderMenu = () => {
+        return <CollectionMenu filterByCollection={this.props.filterByCollection} collectionNames={this.props.artworkProps.collectionNames} />
+    }
+
+    renderCards = () => {
+        return this.props.artworkProps.displayedArtworks.map(artwork => {
+            return (
+                <Grid.Column width={2}>
+                    <ArtworkCard artwork={artwork} selectArtwork={this.props.selectArtwork}/>
+                </Grid.Column>
+    
+            )
         })
     }
 
-    filterByCollection = (collectionName) => {
-        this.state.artworks.filter(artwork => artwork.collection === collectionName)
+    renderNextButton = () => {
+        return this.state.nextButtonShown ? <Icon name='caret square right outline' size='big' aria-label="More Images" onClick={this.props.moreImages}/> : null
     }
 
-    renderMenu = () => {
-        return <CollectionMenu collectionNames={this.state.collectionNames}/>
+    renderPrevButton = () => {
+        return this.state.prevButtonShown ? <Icon name='caret square left outline' size='big' aria-label="Less Images" onClick={this.props.lessImages} /> : null
     }
+
+    // moreImages = () => {
+    //     const currentIndex = this.state.displayIndex + 8 > this.state.displayedCollection.length ? 0 : this.state.displayIndex + 8
+    //     this.state.displayIndex + 8 === this.state.displayedCollection.length ? (
+    //         this.setState({nextButtonShown: false})
+    //     ) : (
+    //         this.setState({displayIndex: currentIndex, displayedArtworks: this.state.displayedCollection.slice(currentIndex, currentIndex+8,), prevButtonShown: true}, () => console.log(this.state))
+    //     )
+    // }
+
+    // lessImages = () => {
+    //     const currentIndex = this.state.displayIndex - 8 > 0 ? this.state.displayIndex - 8 : 0
+    //     this.state.displayIndex - 8 <= 8 ? (
+    //         this.setState({prevButtonShown: false}, () => console.log(this.state.prevButtonShown)) 
+    //     ) : (
+    //         this.setState({displayIndex: currentIndex, displayedArtworks: this.state.displayedCollection.slice(currentIndex, currentIndex+8), prevButtonShown: true}, () => console.log(this.state.displayIndex))
+    //     )
+    // }
 
     render () {
         return (
-            <div>
-                {this.renderMenu()}
-                <Grid>
-                    <Grid.Column width={4}>
-                    <Image src='/images/wireframe/image.png' />
-                    </Grid.Column>
-                    <Grid.Column width={4}>
-                    <Image src='/images/wireframe/paragraph.png' />
-                    </Grid.Column>
-                    <Grid.Column width={4}>
-                    <Image src='/images/wireframe/media-paragraph.png' />
-                    </Grid.Column>
-                    <Grid.Column width={4}>
-                    <Image src='/images/wireframe/media-paragraph.png' />
-                    </Grid.Column>
-                </Grid>
-            </div>
+            <span className="top-bar-container">
+                    <div className="art-selector-container">
+                        {this.renderMenu()}
+                    <Grid columns={3}>
+                        <Grid.Column width={1}  className="arrow-button">
+                            {this.state.prevButtonShown ? this.renderPrevButton() : null}
+                        </Grid.Column>
+                        <Grid.Column width={14}>
+                            <Grid columns={8} className="cards centered card-row">
+                                {this.renderCards()}
+                            </Grid>
+                        </Grid.Column>
+                        <Grid.Column width={1} className="arrow-button">
+                            { this.renderNextButton() }
+                        </Grid.Column>
+                    </Grid>
+                    </div>
+            </span>
         )
     }
 }

@@ -1,0 +1,19 @@
+.image {
+    background: black !important;
+    width: 100%;
+    height: 150px;
+    text-align: center;
+}
+
+.img-link {
+    width: auto !important;
+    height: 150px !important;
+    margin: 0 auto;
+    border-radius: 0 !important;
+}
+
+.card-text {
+    color: white;
+    padding: 10px;
+    font-size: 12px;
+}

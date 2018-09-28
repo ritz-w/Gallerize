@@ -3,8 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "ajv": "^6.5.4",
+    "re-resizable": "^4.9.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-draggable": "^3.0.5",
+    "react-resizable": "^1.7.5",
     "react-scripts": "1.1.5",
     "semantic-ui-css": "^2.4.0",
     "semantic-ui-react": "^0.82.5"
