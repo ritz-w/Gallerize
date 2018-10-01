@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css?family=Pacifico|Krub');
+
+.site-title {
+    font-family: 'Pacifico', cursive;
+    font-size: 4em;
+    padding: 0.5%;
+    text-align: center;
+    color: #FAED26;
+}
+
+.nav-menu {
+    margin: 2% auto !important;
+    width: 50%;
+}
+
+.item {
+    margin: 0 auto !important;
+    font-size: 1em;
+    font-family: 'Krub', cursive;
+}

@@ -5,13 +5,6 @@ import ArtworkCard from '../components/ArtworkCard'
 import './ArtSelector.css'
 
 export default class ArtSelector extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            prevButtonShown: false,
-            nextButtonShown: true
-        }
-    }
 
     renderMenu = () => {
         return <CollectionMenu filterByCollection={this.props.filterByCollection} collectionNames={this.props.artworkProps.collectionNames} />
@@ -29,11 +22,11 @@ export default class ArtSelector extends Component {
     }
 
     renderNextButton = () => {
-        return this.state.nextButtonShown ? <Icon name='caret square right outline' size='big' aria-label="More Images" onClick={this.props.moreImages}/> : null
+        return this.props.artworkProps.nextButtonShown ? <Icon name='caret square right outline' size='big' aria-label="More Images" onClick={this.props.moreImages}/> : null
     }
 
     renderPrevButton = () => {
-        return this.state.prevButtonShown ? <Icon name='caret square left outline' size='big' aria-label="Less Images" onClick={this.props.lessImages} /> : null
+        return this.props.artworkProps.prevButtonShown ? <Icon name='caret square left outline' size='big' aria-label="Less Images" onClick={this.props.lessImages} /> : null
     }
 
     // moreImages = () => {
@@ -56,12 +49,11 @@ export default class ArtSelector extends Component {
 
     render () {
         return (
-            <span className="top-bar-container">
                     <div className="art-selector-container">
                         {this.renderMenu()}
                     <Grid columns={3}>
                         <Grid.Column width={1}  className="arrow-button">
-                            {this.state.prevButtonShown ? this.renderPrevButton() : null}
+                            {this.renderPrevButton()}
                         </Grid.Column>
                         <Grid.Column width={14}>
                             <Grid columns={8} className="cards centered card-row">
@@ -73,7 +65,6 @@ export default class ArtSelector extends Component {
                         </Grid.Column>
                     </Grid>
                     </div>
-            </span>
         )
     }
 }

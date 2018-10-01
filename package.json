@@ -11,7 +11,8 @@
     "react-resizable": "^1.7.5",
     "react-scripts": "1.1.5",
     "semantic-ui-css": "^2.4.0",
-    "semantic-ui-react": "^0.82.5"
+    "semantic-ui-react": "^0.82.5",
+    "uuid": "^3.3.2"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import uuid from 'uuid'
+import './Page.css'
 import ArtSelector from './ArtSelector';
 import GalleryWall from './GalleryWall';
+import Header from '../components/Header'
 
 export default class Page extends Component {
     constructor(props) {
@@ -11,8 +14,13 @@ export default class Page extends Component {
             selectedCollections: [],
             displayedArtworks: [],
             displayedCollection: [],
+            captions: [],
+            titles: [],
             selectedArtworks: [],
-            displayIndex: 0
+            displayIndex: 0,
+            prevButtonShown: false,
+            nextButtonShown: true,
+            artSelectorShown: true
         }
     }
 
@@ -26,14 +34,18 @@ export default class Page extends Component {
         })
     }
 
-    filterByCollection = (collectionNameArray) => {
-        this.setState({selectedCollections: collectionNameArray})
+    updateCollection = () => {
         let allCollectionsWorks = []
         for (let i=0; i<this.state.selectedCollections.length; i++) {
             let collectionWorks = this.state.artworks.filter(artwork => artwork.collection === this.state.selectedCollections[i])
             allCollectionsWorks = allCollectionsWorks.concat(collectionWorks)
+            console.log(allCollectionsWorks)
             this.setState({displayedCollection: allCollectionsWorks, displayedArtworks: allCollectionsWorks.slice(0,8)}, () => console.log(this.state))
         }
+    }
+
+    filterByCollection = (collectionNameArray) => {
+        this.setState({selectedCollections: collectionNameArray}, () => this.updateCollection())
     }
 
     moreImages = () => {
@@ -58,11 +70,66 @@ export default class Page extends Component {
         this.setState({selectedArtworks: [...this.state.selectedArtworks, artwork]})
     }
 
+    //add, edit, or delete text functions
+    addCaption = () => {
+        let captionObj = {id: uuid(), text: ""}
+        this.setState({captions: [...this.state.captions, captionObj]}, () => console.log(this.state.captions))
+    }
+
+    editCaption = (captionText, captionId) => {
+        const foundCaption = JSON.parse(JSON.stringify(this.state.captions.find(caption => caption.id === captionId)))
+        const filteredCaptions = JSON.parse(JSON.stringify(this.state.captions.filter(caption => caption.id !== captionId)))
+        foundCaption.text = captionText
+        this.setState({captions: [...filteredCaptions, foundCaption]}, () => console.log(this.state.captions))
+    }
+
+    deleteCaption = (selectedCaption) => {
+        const captionRemoved = JSON.parse(JSON.stringify(this.state.captions.filter(caption => caption !== selectedCaption)))
+        this.setState({captions: captionRemoved})
+    }
+
+    //add, edit, or delete title text functions
+    addTitle = () => {
+        let titleObj = {id: uuid(), text: ""}
+        this.setState({titles: [...this.state.titles, titleObj]})
+    }
+
+    editTitle = (titleText, titleId) => {
+        const foundTitle = JSON.parse(JSON.stringify(this.state.titles.find(title => title.id === titleId)))
+        const filteredTitles = JSON.parse(JSON.stringify(this.state.titles.filter(title => title.id !== titleId)))
+        foundTitle.text = titleText
+        this.setState({titles: [...filteredTitles, foundTitle]}, () => console.log(this.state.titles))
+    }
+
+    deleteTitle = (selectedTitle) => {
+        const titleRemoved = JSON.parse(JSON.stringify(this.state.titles.filter(title => title !== selectedTitle)))
+        this.setState({titles: titleRemoved})
+    }
+
+
+    renderArtSelector = () => {
+        return this.state.artSelectorShown ? (
+            <ArtSelector filterByCollection={this.filterByCollection} moreImages={this.moreImages} lessImages={this.lessImages} artworkProps={this.state} selectArtwork={this.selectArtwork}/> 
+        ) : null
+    }
+
+    toggleArtSelector = () => {
+        this.state.artSelectorShown ? this.setState({artSelectorShown: false}) : this.setState({artSelectorShown: true})
+    }
+
+    deleteArtwork = (selectedArtwork) => {
+        const artworkRemoved = JSON.parse(JSON.stringify(this.state.selectedArtworks.filter(artwork => artwork !== selectedArtwork)))
+        this.setState({selectedArtworks: artworkRemoved})
+    }
+
     render () {
         return (
             <div>
-               <ArtSelector filterByCollection={this.filterByCollection} moreImages={this.moreImages} lessImages={this.lessImages} artworkProps={this.state} selectArtwork={this.selectArtwork}/> 
-               <GalleryWall selectedArtworks={this.state.selectedArtworks} />
+                <div class="top-bar-container">
+                    <Header addCaption={this.addCaption} toggleArtSelector={this.toggleArtSelector} addTitle={this.addTitle}/>
+                {this.renderArtSelector()}
+                </div>
+               <GalleryWall selectedArtworks={this.state.selectedArtworks} captions={this.state.captions} editCaption={this.editCaption} deleteCaption={this.deleteCaption} titles={this.state.titles} editTitle={this.editTitle} deleteTitle={this.deleteTitle} deleteArtwork={this.deleteArtwork} />
             </div>
         )
     }

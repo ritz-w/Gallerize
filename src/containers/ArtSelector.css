@@ -1,10 +1,10 @@
 .art-selector-container {
-    height: 220px;
-    border-bottom: 2px solid black;
+    height: 260px;
 }
 
 .combo-box {
-    margin: 0.5% auto;
+    margin: 0 auto 2% auto;
+    width: 80% !important;
 }
 
 .arrow-button {

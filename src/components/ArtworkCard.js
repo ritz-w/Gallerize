@@ -20,7 +20,7 @@ export default class ArtworkCard extends Component {
     render() {
         return (
             <Card raised fluid onClick={() => this.props.selectArtwork(this.props.artwork)}>
-                <div className="image" onMouseEnter={this.showDescription} onMouseLeave={this.hideDescription}>
+                <div className="image" onMouseEnter={this.showDescription} onMouseOutCapture={this.hideDescription}>
                 { 
                 this.state.descriptionShown ? 
                 <ArtworkCardDesc artwork={this.props.artwork}/>
