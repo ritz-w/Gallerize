@@ -25,10 +25,11 @@ export default class Page extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:3000/artworks')
+        fetch('http://localhost:3000/api/v1/artworks')
         .then(res => res.json())
         .then(data => this.setState({ artworks: data }))
         .then(() => {
+            console.log(this.state)
             const collectionNames = this.state.artworks.map(artwork => artwork.collection).unique()
             this.setState({collectionNames: collectionNames, displayedCollection: this.state.artworks, displayedArtworks: this.state.artworks.slice(0,8)}, () => console.log(this.state))
         })
@@ -60,7 +61,7 @@ export default class Page extends Component {
     lessImages = () => {
         const currentIndex = this.state.displayIndex - 8 > 0 ? this.state.displayIndex - 8 : 0
         this.state.displayIndex - 8 <= 8 ? (
-            this.setState({prevButtonShown: false}, () => console.log(this.state.prevButtonShown)) 
+            this.setState({prevButtonShown: false}, () => console.log(this.state.prevButtonShown))
         ) : (
             this.setState({displayIndex: currentIndex, displayedArtworks: this.state.displayedCollection.slice(currentIndex, currentIndex+8), prevButtonShown: true}, () => console.log(this.state.displayIndex))
         )
@@ -109,7 +110,7 @@ export default class Page extends Component {
 
     renderArtSelector = () => {
         return this.state.artSelectorShown ? (
-            <ArtSelector filterByCollection={this.filterByCollection} moreImages={this.moreImages} lessImages={this.lessImages} artworkProps={this.state} selectArtwork={this.selectArtwork}/> 
+            <ArtSelector filterByCollection={this.filterByCollection} moreImages={this.moreImages} lessImages={this.lessImages} artworkProps={this.state} selectArtwork={this.selectArtwork}/>
         ) : null
     }
 
@@ -126,7 +127,7 @@ export default class Page extends Component {
         return (
             <div>
                 <div class="top-bar-container">
-                    <Header addCaption={this.addCaption} toggleArtSelector={this.toggleArtSelector} addTitle={this.addTitle}/>
+                    <Header signin={this.props.signin} signout={this.props.signout} currentUser={this.props.currentUser} addCaption={this.addCaption} toggleArtSelector={this.toggleArtSelector} addTitle={this.addTitle}/>
                 {this.renderArtSelector()}
                 </div>
                <GalleryWall selectedArtworks={this.state.selectedArtworks} captions={this.state.captions} editCaption={this.editCaption} deleteCaption={this.deleteCaption} titles={this.state.titles} editTitle={this.editTitle} deleteTitle={this.deleteTitle} deleteArtwork={this.deleteArtwork} />
