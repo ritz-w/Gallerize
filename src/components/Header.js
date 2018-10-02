@@ -25,7 +25,7 @@ render () {
           : 
           <div>
             <button onClick={() => this.setState({login: false})}> Sign Up</button>
-            <button onClick={() => this.setState({login: true})}> Log In </button>
+            <button onClick={() => this.setState({login: true})}> Sign In </button>
 
             {
               this.state.login ? 
