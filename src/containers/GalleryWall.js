@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './GalleryWall.css';
 import Draggable from 'react-draggable';
-// import { Resizable, ResizableBox } from 'react-resizable';
 import Resizable from 're-resizable'
 import Caption from '../components/Caption'
 import Title from '../components/Title'
@@ -14,7 +13,9 @@ export default class GalleryWall extends Component {
         return this.props.selectedArtworks.map(artwork => {
             return (
                 <Draggable
-                    defaultPosition={{x: 0, y: 0}}>
+                    defaultPosition={{x: 0, y: 0}}
+                    onStop={this.props.onChange}
+                    >
                     <Resizable
                       defaultSize={{
                         width: 200,

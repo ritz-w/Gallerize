@@ -45,8 +45,10 @@ render () {
           </Dropdown.Menu>
         </Dropdown>
 
-        <Menu.Item name='Export' />
-        <Menu.Item name='See Full Screen' />
+        <Menu.Item name='Export'>
+        </Menu.Item>
+        <Menu.Item onClick={this.props.enableFullScreen} name='See Full Screen'>
+        </Menu.Item>
       </Menu>
     </div>
   )
