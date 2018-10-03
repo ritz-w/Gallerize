@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import uuid from 'uuid'
 import './Page.css'
 import ArtSelector from './ArtSelector';
-import GalleryWall from './GalleryWall';
 import Header from '../components/Header'
+import GalleryWallContainer from './GalleryWallContainer'
+import Fullscreen from "react-full-screen";
+// import ThreeDViewer from './ThreeDViewer'
+
 
 export default class Page extends Component {
     constructor(props) {
@@ -20,7 +23,9 @@ export default class Page extends Component {
             displayIndex: 0,
             prevButtonShown: false,
             nextButtonShown: true,
-            artSelectorShown: true
+            artSelectorShown: true,
+            isFull: false,
+            currentWall: "gallery1"
         }
     }
 
@@ -66,8 +71,10 @@ export default class Page extends Component {
         )
     }
 
-    selectArtwork = (artwork) => {
-        this.setState({selectedArtworks: [...this.state.selectedArtworks, artwork]})
+    selectArtwork = (artwork, galleryId) => {
+        this.setState({selectedArtworks: [... this.state.selectedArtworks[galleryId], artwork]
+            }
+        , () => console.log(this.state.selectedArtworks))    
     }
 
     //add, edit, or delete text functions
@@ -117,19 +124,36 @@ export default class Page extends Component {
         this.state.artSelectorShown ? this.setState({artSelectorShown: false}) : this.setState({artSelectorShown: true})
     }
 
-    deleteArtwork = (selectedArtwork) => {
+    deleteArtwork = (selectedArtwork, galleryId) => {
         const artworkRemoved = JSON.parse(JSON.stringify(this.state.selectedArtworks.filter(artwork => artwork !== selectedArtwork)))
         this.setState({selectedArtworks: artworkRemoved})
     }
+
+    enableFullScreen = () =>{
+        this.setState({isFull: true})
+    }
+
+    // handleChangeWall = (changedWall) => {
+
+    // }
+
+
 
     render () {
         return (
             <div>
                 <div class="top-bar-container">
-                    <Header addCaption={this.addCaption} toggleArtSelector={this.toggleArtSelector} addTitle={this.addTitle}/>
+                    <Header addCaption={this.addCaption} toggleArtSelector={this.toggleArtSelector} addTitle={this.addTitle} enableFullScreen={this.enableFullScreen}/>
                 {this.renderArtSelector()}
                 </div>
-               <GalleryWall selectedArtworks={this.state.selectedArtworks} captions={this.state.captions} editCaption={this.editCaption} deleteCaption={this.deleteCaption} titles={this.state.titles} editTitle={this.editTitle} deleteTitle={this.deleteTitle} deleteArtwork={this.deleteArtwork} />
+                <Fullscreen
+                enabled={this.state.isFull}
+                onChange={isFull => this.setState({isFull})}
+                >
+                <GalleryWallContainer onChange={this.saveGallery} selectedArtworks={this.state.selectedArtworks} captions={this.state.captions} editCaption={this.editCaption} deleteCaption={this.deleteCaption} titles={this.state.titles} editTitle={this.editTitle} deleteTitle={this.deleteTitle} deleteArtwork={this.deleteArtwork} />
+               {/* <GalleryWall className="full-screenable-node" onChange={this.saveGallery} selectedArtworks={this.state.selectedArtworks} captions={this.state.captions} editCaption={this.editCaption} deleteCaption={this.deleteCaption} titles={this.state.titles} editTitle={this.editTitle} deleteTitle={this.deleteTitle} deleteArtwork={this.deleteArtwork} /> */}
+               </Fullscreen>
+               {/* <ThreeDViewer /> */}
             </div>
         )
     }

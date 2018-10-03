@@ -23,9 +23,9 @@ const Header = (props) => {
                     </Dropdown.Menu>
                 </Dropdown>
 
-                <Menu.Item name='Export'>
+                <Menu.Item onClick={props.exportGallery} name='Export'>
                 </Menu.Item>
-                <Menu.Item name='See Full Screen'>
+                <Menu.Item onClick={props.enableFullScreen} name='See Full Screen'>
                 </Menu.Item>
       </Menu>
         </div>
