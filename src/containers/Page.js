@@ -30,7 +30,7 @@ export default class Page extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:3000/artworks')
+        fetch('http://localhost:3000/api/v1/artworks')
         .then(res => res.json())
         .then(data => this.setState({ artworks: data }))
         .then(() => {
@@ -72,7 +72,7 @@ export default class Page extends Component {
     }
 
     selectArtwork = (artwork, galleryId) => {
-        this.setState({selectedArtworks: [... this.state.selectedArtworks[galleryId], artwork]
+        this.setState({selectedArtworks: [... this.state.selectedArtworks, artwork]
             }
         , () => console.log(this.state.selectedArtworks))    
     }
