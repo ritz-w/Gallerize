@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Button, Input} from 'semantic-ui-react'
+import {Button, Form} from 'semantic-ui-react'
 
 import API from '../adapters/API'
 class SignUpForm extends React.Component {
@@ -20,7 +20,7 @@ class SignUpForm extends React.Component {
         } else {
           console.log("data",data)
           localStorage.setItem('token', data.token)
-          signin(data.email)
+          signin(data)
         }
       })
   }
@@ -33,30 +33,36 @@ class SignUpForm extends React.Component {
     const { handleChange, handleSubmit } = this
 
     return (
-      <div>
-        <Input
+      <Form>
+        <Form.Field>
+          <label>Email</label>
+        <Form.Input
+          placeholder="Enter Email"
           id='emailInput'
-          label='Email'
           value={email}
+          onClick={e => e.stopPropagation()}
           onChange={handleChange}
           margin='normal'
           name='email'
         />
-        <br />
-        <Input
+        </Form.Field>
+        <Form.Field>
+        <label>Password</label>
+        <Form.Input 
+          placeholder="Enter Password"
           id='passwordInput'
-          label='Password'
+          onClick={e => e.stopPropagation()}
           value={password}
           onChange={handleChange}
           margin='normal'
           name='password'
           type='password'
         />
-        <br />
+        </Form.Field>
         <Button onClick={handleSubmit} variant='contained' color='primary'>
           Sign Up
         </Button>
-      </div>
+      </Form>
     )
   }
 }

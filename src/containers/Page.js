@@ -17,15 +17,12 @@ export default class Page extends Component {
             selectedCollections: [],
             displayedArtworks: [],
             displayedCollection: [],
-            captions: [],
-            titles: [],
-            selectedArtworks: [],
             displayIndex: 0,
             prevButtonShown: false,
             nextButtonShown: true,
             artSelectorShown: true,
             isFull: false,
-            currentWall: "gallery1"
+            currentWall: "Wall 1"
         }
     }
 
@@ -71,53 +68,106 @@ export default class Page extends Component {
             this.setState({displayIndex: currentIndex, displayedArtworks: this.state.displayedCollection.slice(currentIndex, currentIndex+8), prevButtonShown: true}, () => console.log(this.state.displayIndex))
         )
     }
+    
 
-    selectArtwork = (artwork, galleryId) => {
-        this.setState({selectedArtworks: [... this.state.selectedArtworks, artwork]
-            }
-        , () => console.log(this.state.selectedArtworks))    
+    updateGalleries = () => {
+        fetch(`http://localhost:3000/api/v1/users/${this.props.currentUserId}/galleries`)
+        .then(res => res.json())
+        .then(galleryData => this.props.setGalleriesState(galleryData), () => console.log(this.props.galleries))
     }
 
-    //add, edit, or delete text functions
-    addCaption = () => {
-        let captionObj = {id: uuid(), text: ""}
-        this.setState({captions: [...this.state.captions, captionObj]}, () => console.log(this.state.captions))
+
+    getWidth = (url) => {
+        let img = new Image();
+        img.src = url;
+        return img.width
     }
 
-    editCaption = (captionText, captionId) => {
-        const foundCaption = JSON.parse(JSON.stringify(this.state.captions.find(caption => caption.id === captionId)))
-        const filteredCaptions = JSON.parse(JSON.stringify(this.state.captions.filter(caption => caption.id !== captionId)))
-        foundCaption.text = captionText
-        this.setState({captions: [...filteredCaptions, foundCaption]}, () => console.log(this.state.captions))
+    getHeight = (url) => {
+        let img = new Image();
+        img.src = url;
+        return img.height
     }
 
-    deleteCaption = (selectedCaption) => {
-        const captionRemoved = JSON.parse(JSON.stringify(this.state.captions.filter(caption => caption !== selectedCaption)))
-        this.setState({captions: captionRemoved})
+    selectArtwork = (artwork, wallId) => {
+        fetch("http://localhost:3000/api/v1/add_artwork", {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                artwork_id: artwork.id,
+                user_email: this.props.currentUser,
+                gallery_wall: parseInt(wallId-1),
+                height: this.getHeight(artwork.image),
+                width: this.getWidth(artwork.image)
+        })
+        }).then(res => res.json())
+        .then(data => this.props.setGalleriesState(data))
     }
 
-    //add, edit, or delete title text functions
-    addTitle = () => {
-        let titleObj = {id: uuid(), text: ""}
-        this.setState({titles: [...this.state.titles, titleObj]})
+    deleteArtwork = (USId) => {
+        fetch(`http://localhost:3000/api/v1/user_selections/${USId}`, {
+            method: 'DELETE'
+        }).then(res => res.json())
+        .then(data => this.updateGalleries())
     }
 
-    editTitle = (titleText, titleId) => {
-        const foundTitle = JSON.parse(JSON.stringify(this.state.titles.find(title => title.id === titleId)))
-        const filteredTitles = JSON.parse(JSON.stringify(this.state.titles.filter(title => title.id !== titleId)))
-        foundTitle.text = titleText
-        this.setState({titles: [...filteredTitles, foundTitle]}, () => console.log(this.state.titles))
-    }
+    // //user add, edit, or delete text functions
+    // addCaption = (wallId) => {
+    //     let captionObj = {id: uuid(), text: ""}
+    //     const allWallCaptions = {...this.state.captions}
+    //     allWallCaptions[wallId] = [...this.state.captions[wallId], captionObj]
+    //     this.setState({captions: allWallCaptions}, () => console.log(this.state.captions))
+    // }
 
-    deleteTitle = (selectedTitle) => {
-        const titleRemoved = JSON.parse(JSON.stringify(this.state.titles.filter(title => title !== selectedTitle)))
-        this.setState({titles: titleRemoved})
-    }
+    // editCaption = (captionText, captionId, wallId) => {
+    //     const allWallCaptions = JSON.parse(JSON.stringify({...this.state.captions}))
+    //     const foundCaption = JSON.parse(JSON.stringify(this.state.captions[wallId].find(caption => caption.id === captionId)))
+    //     foundCaption.text = captionText
+    //     allWallCaptions[wallId] = JSON.parse(JSON.stringify(this.state.captions[wallId].filter(caption => caption.id !== captionId)))
+    //     allWallCaptions[wallId] = [...allWallCaptions[wallId], foundCaption]
+    //     this.setState({captions: allWallCaptions}, () => console.log(this.state.captions))
+    // }
+
+    // deleteCaption = (selectedCaption, wallId) => {
+    //     const allWallCaptions = JSON.parse(JSON.stringify({...this.state.captions}))
+    //     allWallCaptions[wallId] =  JSON.parse(JSON.stringify(this.state.captions[wallId].filter(caption => caption !== selectedCaption)))
+    //     this.setState({captions: allWallCaptions}, () => console.log(this.state.captions))
+    // }
+
+    // //user add, edit, or delete title text functions
+    // addTitle = (wallId) => {
+    //     let titleObj = {id: uuid(), text: ""}
+    //     const allWallTitles = {...this.state.titles}
+    //     allWallTitles[wallId] = [...this.state.titles[wallId], titleObj]
+    //     this.setState({titles: allWallTitles}, () => console.log(this.state.titles))
+    // }
+
+    // editTitle = (titleText, titleId, wallId) => {
+    //     const allWallTitles = JSON.parse(JSON.stringify({...this.state.titles}))
+    //     const foundTitle = JSON.parse(JSON.stringify(this.state.titles[wallId].find(title => title.id === titleId)))
+    //     foundTitle.text = titleText
+    //     allWallTitles[wallId] = JSON.parse(JSON.stringify(this.state.titles[wallId].filter(title => title.id !== titleId)))
+    //     allWallTitles[wallId] = [...allWallTitles[wallId], foundTitle]
+    //     this.setState({titles: allWallTitles}, () => console.log(this.state.titles))
+    // }
+
+    // deleteTitle = (selectedTitle, wallId) => {
+    //     const allWallTitles = JSON.parse(JSON.stringify({...this.state.titles}))
+    //     allWallTitles[wallId] =  JSON.parse(JSON.stringify(this.state.titles[wallId].filter(title => title !== selectedTitle)))
+    //     this.setState({titles: allWallTitles}, () => console.log(this.state.titles))
+    // }
 
 
     renderArtSelector = () => {
         return this.state.artSelectorShown ? (
-            <ArtSelector filterByCollection={this.filterByCollection} moreImages={this.moreImages} lessImages={this.lessImages} artworkProps={this.state} selectArtwork={this.selectArtwork}/>
+            <ArtSelector 
+            filterByCollection={this.filterByCollection} 
+            moreImages={this.moreImages} 
+            lessImages={this.lessImages} 
+            artworkProps={this.state} 
+            selectArtwork={this.selectArtwork}
+            currentWall={this.state.currentWall}
+            />
         ) : null
     }
 
@@ -125,18 +175,42 @@ export default class Page extends Component {
         this.state.artSelectorShown ? this.setState({artSelectorShown: false}) : this.setState({artSelectorShown: true})
     }
 
-    deleteArtwork = (selectedArtwork, galleryId) => {
-        const artworkRemoved = JSON.parse(JSON.stringify(this.state.selectedArtworks.filter(artwork => artwork !== selectedArtwork)))
-        this.setState({selectedArtworks: artworkRemoved})
-    }
-
-    enableFullScreen = () =>{
+    enableFullScreen = () => {
         this.setState({isFull: true})
     }
 
-    // handleChangeWall = (changedWall) => {
+    handleWallChange = (changedWall) => {
+        this.setState({currentWall: changedWall}, () => {
+            console.log(this.state.currentWall)
+            this.updateGalleries()
+        })
+    
+    }
 
-    // }
+    renderGalleries = () => {
+        return this.props.currentUser ? 
+            (<Fullscreen
+                enabled={this.state.isFull}
+                onChange={isFull => this.setState({isFull})}
+                >
+                <GalleryWallContainer 
+                currentUserId={this.props.currentUserId}
+                updateGalleries={this.updateGalleries}
+                galleries={this.props.galleries} 
+                // captions={this.state.captions} 
+                // editCaption={this.editCaption} 
+                // deleteCaption={this.deleteCaption} 
+                // titles={this.state.titles} 
+                // editTitle={this.editTitle} 
+                // deleteTitle={this.deleteTitle} 
+                deleteArtwork={this.deleteArtwork} 
+                handleWallChange={this.handleWallChange}
+                currentWall={this.state.currentWall}
+                />
+            </Fullscreen>)
+                : 
+            (<div>Please Sign In!</div>) 
+    }
 
 
 
@@ -151,17 +225,12 @@ export default class Page extends Component {
                     addCaption={this.addCaption} 
                     toggleArtSelector={this.toggleArtSelector} 
                     enableFullScreen={this.enableFullScreen} 
-                    addTitle={this.addTitle}/>
+                    addTitle={this.addTitle}
+                    currentWall={this.state.currentWall}
+                    />
                 {this.renderArtSelector()}
                 </div>
-                <Fullscreen
-                enabled={this.state.isFull}
-                onChange={isFull => this.setState({isFull})}
-                >
-                <GalleryWallContainer onChange={this.saveGallery} selectedArtworks={this.state.selectedArtworks} captions={this.state.captions} editCaption={this.editCaption} deleteCaption={this.deleteCaption} titles={this.state.titles} editTitle={this.editTitle} deleteTitle={this.deleteTitle} deleteArtwork={this.deleteArtwork} />
-               {/* <GalleryWall className="full-screenable-node" onChange={this.saveGallery} selectedArtworks={this.state.selectedArtworks} captions={this.state.captions} editCaption={this.editCaption} deleteCaption={this.deleteCaption} titles={this.state.titles} editTitle={this.editTitle} deleteTitle={this.deleteTitle} deleteArtwork={this.deleteArtwork} /> */}
-               </Fullscreen>
-               {/* <ThreeDViewer /> */}
+                { this.renderGalleries() }
             </div>
         )
     }

@@ -14,7 +14,7 @@ export default class ArtSelector extends Component {
         return this.props.artworkProps.displayedArtworks.map(artwork => {
             return (
                 <Grid.Column width={2}>
-                    <ArtworkCard artwork={artwork} selectArtwork={this.props.selectArtwork}/>
+                    <ArtworkCard currentWall={this.props.currentWall} artwork={artwork} selectArtwork={this.props.selectArtwork}/>
                 </Grid.Column>
     
             )

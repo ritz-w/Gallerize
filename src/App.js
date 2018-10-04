@@ -7,12 +7,19 @@ import SignInForm from './components/SignInForm'
 
 class App extends Component {
   state = {
-    currentUser: undefined
+    currentUser: undefined,
+    currentUserId: undefined,
+    galleries: []
   }
 
-  signin = email => {
-    this.setState({ currentUser: email })
-    // this.props.history.push('/users')
+  setGalleriesState = (galleryData) => {
+    this.setState({galleries: galleryData}, () => console.log(this.state.galleries))
+  }
+
+  signin = user => {
+    fetch(`http://localhost:3000/api/v1/users/${user.id}/galleries`)
+    .then(res => res.json())
+    .then(galleryData => this.setState({galleries: galleryData, currentUser: user.email, currentUserId: user.id}))
   }
 
   signout = () => {
@@ -32,13 +39,27 @@ class App extends Component {
     }
   }
 
+  // getWallInfo = (wall) => {
+  //  const wallindex = ["Wall 1", "Wall 2", "Wall 3"].indexOf(wall)
+  //  return fetch(`http://localhost:3000/api/v1/users/${this.state.currentUserId}/galleries`)
+  //   .then(res => res.json())
+  //   .then(data => this.setState({
+  //     galleries: data
+  //   }))
+
+  // }
+
   render () {
     const { signin, signout } = this
-    const { currentUser } = this.state
     return (
       <div className='App'>
         <Page
-        signin={signin} signout={signout} currentUser={currentUser}
+        signin={signin}
+        signout={signout}  
+        currentUser={this.state.currentUser} 
+        currentUserId={this.state.currentUserId} 
+        galleries={this.state.galleries}
+        setGalleriesState={this.setGalleriesState} 
         />
 
       </div>

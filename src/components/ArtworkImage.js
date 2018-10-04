@@ -12,7 +12,7 @@ export default class ArtworkImage extends Component {
     }
 
     renderDeleteButton = () => {
-        return this.state.deleteButtonShown ? <Icon className="close-button" name='x' size='big' onClick={() => this.props.deleteArtwork(this.props.artwork)}/> : null
+        return this.state.deleteButtonShown ? <Icon className="close-button" name='x' size='big' onClick={() => this.props.deleteArtwork(this.props.user_selection_id)}/> : null
         }
 
     showDeleteButton = () => {
@@ -22,6 +22,7 @@ export default class ArtworkImage extends Component {
     hideDeleteButton = () => {
         this.setState({deleteButtonShown: false})
     }
+
 
     render() {
         return (

@@ -22,7 +22,7 @@ export default class TitleCard extends Component {
     renderEditButton = () => {
         return this.state.editButtonOn ? (
             <Button.Group>
-                <Button onClick={() => this.props.deleteTitle(this.props.title)}>Delete</Button>
+                <Button onClick={() => this.props.deleteTitle(this.props.title, this.props.wallId)}>Delete</Button>
                 <Button.Or />
                 <Button positive onClick={this.props.reeditTitle}>Edit</Button>
             </Button.Group>

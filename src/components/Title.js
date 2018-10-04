@@ -24,7 +24,7 @@ export default class Title extends Component {
     }
 
     handleTitleClick = (event) => {
-        this.props.editTitle(this.state.text, this.props.title.id)
+        this.props.editTitle(this.state.text, this.props.title.id, this.props.wallId)
         this.renderTitleCard()
     }
 
@@ -37,7 +37,7 @@ export default class Title extends Component {
             <div>
                 {this.state.isRendered ? 
                     (
-                        <TitleCard text={this.state.text} reeditTitle={this.reeditTitle} deleteTitle={this.props.deleteTitle} title={this.props.title}/>
+                        <TitleCard text={this.state.text} reeditTitle={this.reeditTitle} deleteTitle={this.props.deleteTitle} title={this.props.title} wallId={this.props.wallId}/>
                     ) : (
                     <Form>
                         <Form.TextArea placeholder='Add your title...' value={this.state.text} onChange={this.handleTitleChange} />

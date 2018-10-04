@@ -6,9 +6,6 @@ import SignUpForm from './SignUpForm.js'
 
 class Header extends React.Component {
 
-  state = {
-    login: false
-  }
   
 render () {
   return (
@@ -18,30 +15,36 @@ render () {
 
         { this.props.currentUser ?
 
-          <div>
-            <span> Welcome {this.props.currentUser} </span>
-            <button onClick={this.props.signout}> Sign Out</button>
-          </div>
+        <Dropdown item text='My Account'>
+            <Dropdown.Menu>
+            <Dropdown.Item>Welcome, {this.props.currentUser} !</Dropdown.Item>
+            <Dropdown.Item onClick={this.props.signout}>Sign Out</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
           : 
-          <div>
-            <button onClick={() => this.setState({login: false})}> Sign Up</button>
-            <button onClick={() => this.setState({login: true})}> Sign In </button>
-
-            {
-              this.state.login ? 
-                <SignInForm signin={this.props.signin} />
-              :
-              <SignUpForm signin={this.props.signin} />
-            }
-          </div>
+          
+        <Dropdown item text='Sign In / Sign Up'>
+            <Dropdown.Menu>
+                <Dropdown item text='Sign In'>
+                    <Dropdown.Menu>
+                         <Dropdown.Item><SignInForm signin={this.props.signin} /></Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+                <Dropdown item text='Sign Up'>
+                    <Dropdown.Menu>
+                         <Dropdown.Item><SignUpForm signup={this.props.signup} signin={this.props.signin} /></Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+            </Dropdown.Menu>
+        </Dropdown>
         }
 
         <Menu.Item onClick={this.props.toggleArtSelector} name='Toggle Artwork Selector' />
 
         <Dropdown item text='Add Text Elements'>
           <Dropdown.Menu>
-            <Dropdown.Item onClick={() => this.props.addCaption()}>Add Caption</Dropdown.Item>
-            <Dropdown.Item onClick={() => this.props.addTitle()}>Add Title</Dropdown.Item>
+            <Dropdown.Item onClick={() => this.props.addCaption(this.props.currentWall)}>Add Caption</Dropdown.Item>
+            <Dropdown.Item onClick={() => this.props.addTitle(this.props.currentWall)}>Add Title</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
 
