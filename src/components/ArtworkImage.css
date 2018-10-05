@@ -1,5 +1,9 @@
 .artwork-image {
     height: 100%;
+    width: 100%;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    position: absolute !important;
 }
 
 .close-button {

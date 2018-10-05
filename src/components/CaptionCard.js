@@ -22,7 +22,7 @@ export default class CaptionCard extends Component {
     renderEditButton = () => {
         return this.state.editButtonOn ? (
             <Button.Group>
-                <Button onClick={() => this.props.deleteCaption(this.props.caption, this.props.wallId)}>Delete</Button>
+                <Button onClick={() => this.props.deleteCaption(this.props.caption.id)}>Delete</Button>
                 <Button.Or />
                 <Button positive onClick={this.props.reeditCaption}>Edit</Button>
             </Button.Group>
@@ -33,7 +33,7 @@ export default class CaptionCard extends Component {
     render() {
         return (
             <div onMouseEnter={this.showEditButton} onMouseLeave={this.hideEditButton}>
-                <p>{this.props.text}</p>
+                {this.props.isTitle ? <h1>{this.props.text}</h1> : <p>{this.props.text}</p>}
                 { this.renderEditButton()}
 
             </div> 

@@ -11,7 +11,8 @@ export default class Caption extends Component {
         super(props)
         this.state = {
             text: props.caption.text,
-            isRendered: false
+            isRendered: props.caption.rendered,
+            isTitle: props.caption.title
         }
     }
 
@@ -24,7 +25,7 @@ export default class Caption extends Component {
     }
 
     handleClick = (event) => {
-        this.props.editCaption(this.state.text, this.props.caption.id, this.props.wallId)
+        this.props.editCaption(this.props.caption.id, this.state.text)
         this.renderCard()
     }
 
@@ -37,10 +38,16 @@ export default class Caption extends Component {
             <div>
                 {this.state.isRendered ? 
                     (
-                        <CaptionCard wallId={this.props.wallId} text={this.state.text} reeditCaption={this.reeditCaption} deleteCaption={this.props.deleteCaption} caption={this.props.caption}/>
+                        <CaptionCard 
+                        text={this.state.text} 
+                        reeditCaption={this.reeditCaption} 
+                        deleteCaption={this.props.deleteCaption} 
+                        caption={this.props.caption}
+                        isTitle={this.state.isTitle}
+                        />
                     ) : (
                     <Form>
-                        <Form.TextArea placeholder='Add your caption...' value={this.state.text} onChange={this.handleChange} />
+                        <Form.TextArea placeholder={this.state.isTitle ? 'Add your title...' : 'Add your caption...'} value={this.state.text} onChange={this.handleChange} />
                         <Form.Button onClick={this.handleClick}>Save</Form.Button>
                     </Form>
                     )

@@ -43,8 +43,8 @@ render () {
 
         <Dropdown item text='Add Text Elements'>
           <Dropdown.Menu>
-            <Dropdown.Item onClick={() => this.props.addCaption(this.props.currentWall)}>Add Caption</Dropdown.Item>
-            <Dropdown.Item onClick={() => this.props.addTitle(this.props.currentWall)}>Add Title</Dropdown.Item>
+            <Dropdown.Item onClick={() => this.props.addCaption(this.props.galleries[this.props.currentWall - 1].id, false)}>Add Caption</Dropdown.Item>
+            <Dropdown.Item onClick={() => this.props.addCaption(this.props.galleries[this.props.currentWall - 1].id, true)}>Add Title</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
 

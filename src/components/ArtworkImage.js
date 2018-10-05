@@ -12,7 +12,7 @@ export default class ArtworkImage extends Component {
     }
 
     renderDeleteButton = () => {
-        return this.state.deleteButtonShown ? <Icon className="close-button" name='x' size='big' onClick={() => this.props.deleteArtwork(this.props.user_selection_id)}/> : null
+        return this.state.deleteButtonShown ? <Icon className="close-button" name='x' size='big' onClick={() => this.props.deleteArtwork(this.props.selection.id)}/> : null
         }
 
     showDeleteButton = () => {
@@ -26,7 +26,18 @@ export default class ArtworkImage extends Component {
 
     render() {
         return (
-            <div onMouseEnter={this.showDeleteButton} onMouseLeave={this.hideDeleteButton} className="artwork-image">
+            <div 
+            onMouseEnter={this.showDeleteButton} 
+            onMouseLeave={this.hideDeleteButton} 
+            className="artwork-image"
+            style={{
+                background: `url(${this.props.selection.artwork.image})`,
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                position: 'absolute'
+              }}
+            lockAspectRatio={true}
+            >
                 <span>{this.renderDeleteButton()}</span>
                 {this.props.children}
             </div>
