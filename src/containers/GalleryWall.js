@@ -14,6 +14,7 @@ export default class GalleryWall extends Component {
         return this.props.galleryInfo.user_selections.map(selection => {
             return (
                 <ArtworkContainer 
+                key={`artwork-container-${selection.artwork.id}`}
                 selection={selection} 
                 wallId={this.props.wallId} 
                 user_id={this.props.currentUserId}
@@ -28,6 +29,7 @@ export default class GalleryWall extends Component {
         return this.props.galleryInfo.captions.map(caption => {
             return (
                 <CaptionContainer 
+                key={`caption-container-${caption.id}`}
                 caption={caption} 
                 wallId={this.props.wallId} 
                 user_id={this.props.currentUserId}

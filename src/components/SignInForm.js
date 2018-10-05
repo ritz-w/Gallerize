@@ -59,7 +59,7 @@ class SignInForm extends React.Component {
           type='password'
         />
         </Form.Field>
-        <Button onClick={handleSubmit} variant='contained' color='primary'>
+        <Button onClick={handleSubmit} variant='contained'>
           Sign In
         </Button>
       </Form>

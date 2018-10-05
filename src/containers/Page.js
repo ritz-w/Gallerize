@@ -210,7 +210,7 @@ export default class Page extends Component {
     render () {
         return (
             <div>
-                <div class="top-bar-container">
+                <div className="top-bar-container">
                     <Header 
                     signin={this.props.signin} 
                     signout={this.props.signout} 

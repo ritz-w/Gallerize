@@ -1,9 +1,6 @@
 import React, {Component} from 'react'
 import { Form } from 'semantic-ui-react'
 import CaptionCard from './CaptionCard'
-import uuid from 'uuid'
-
-
 
 export default class Caption extends Component {
 

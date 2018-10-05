@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 import Page from './containers/Page'
 import API from './adapters/API'
-import { Route, withRouter } from 'react-router-dom'
-import SignInForm from './components/SignInForm'
+import { withRouter } from 'react-router-dom'
 
 class App extends Component {
   state = {
@@ -19,7 +18,10 @@ class App extends Component {
   signin = user => {
     fetch(`http://localhost:3000/api/v1/users/${user.id}/galleries`)
     .then(res => res.json())
-    .then(galleryData => this.setState({galleries: galleryData, currentUser: user.email, currentUserId: user.id}))
+    .then(galleryData => {
+      console.log(galleryData)
+      this.setState({galleries: galleryData, currentUser: user.email, currentUserId: user.id})
+    })
   }
 
   signout = () => {
@@ -38,16 +40,6 @@ class App extends Component {
         })
     }
   }
-
-  // getWallInfo = (wall) => {
-  //  const wallindex = ["Wall 1", "Wall 2", "Wall 3"].indexOf(wall)
-  //  return fetch(`http://localhost:3000/api/v1/users/${this.state.currentUserId}/galleries`)
-  //   .then(res => res.json())
-  //   .then(data => this.setState({
-  //     galleries: data
-  //   }))
-
-  // }
 
   render () {
     const { signin, signout } = this

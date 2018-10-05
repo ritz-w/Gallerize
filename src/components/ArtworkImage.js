@@ -36,7 +36,6 @@ export default class ArtworkImage extends Component {
                 backgroundRepeat: 'no-repeat',
                 position: 'absolute'
               }}
-            lockAspectRatio={true}
             >
                 <span>{this.renderDeleteButton()}</span>
                 {this.props.children}

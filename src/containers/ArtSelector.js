@@ -13,8 +13,8 @@ export default class ArtSelector extends Component {
     renderCards = () => {
         return this.props.artworkProps.displayedArtworks.map(artwork => {
             return (
-                <Grid.Column width={2}>
-                    <ArtworkCard currentWall={this.props.currentWall} artwork={artwork} selectArtwork={this.props.selectArtwork}/>
+                <Grid.Column width={2} key={`grid-column-artwork${artwork.id}`}>
+                    <ArtworkCard key={`artwork-card-${artwork.id}`} currentWall={this.props.currentWall} artwork={artwork} selectArtwork={this.props.selectArtwork}/>
                 </Grid.Column>
     
             )

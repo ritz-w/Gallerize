@@ -38,7 +38,7 @@ class SignUpForm extends React.Component {
           <label>Email</label>
         <Form.Input
           placeholder="Enter Email"
-          id='emailInput'
+          id='signUpEmailInput'
           value={email}
           onClick={e => e.stopPropagation()}
           onChange={handleChange}
@@ -50,7 +50,7 @@ class SignUpForm extends React.Component {
         <label>Password</label>
         <Form.Input 
           placeholder="Enter Password"
-          id='passwordInput'
+          id='signUpPasswordInput'
           onClick={e => e.stopPropagation()}
           value={password}
           onChange={handleChange}
@@ -59,7 +59,7 @@ class SignUpForm extends React.Component {
           type='password'
         />
         </Form.Field>
-        <Button onClick={handleSubmit} variant='contained' color='primary'>
+        <Button onClick={handleSubmit} variant='contained'>
           Sign Up
         </Button>
       </Form>

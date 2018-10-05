@@ -40,7 +40,8 @@ export default class CaptionContainer extends Component {
             <Rnd
             key={caption.id}
             id={caption.id}
-            ref={c => { this.rnd = c; }} 
+            ref={c => { this.rnd = c; }}
+            enableUserSelectHack={false} 
             default={{
                 x: caption.x_position,
                 y: caption.y_position,
