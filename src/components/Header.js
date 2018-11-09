@@ -48,7 +48,7 @@ render () {
           </Dropdown.Menu>
         </Dropdown>
 
-        <Menu.Item name='Export'>
+        <Menu.Item name={this.props.threeDimView ? 'Edit Walls' : ' View 3-D Gallery'} onClick={this.props.switchTo3D}>
         </Menu.Item>
         <Menu.Item onClick={this.props.enableFullScreen} name='See Full Screen'>
         </Menu.Item>

@@ -5,7 +5,7 @@ import ArtworkImage from '../components/ArtworkImage'
 export default class ArtworkContainer extends Component {
 
     handleDragEvent = (data, artwork, user_selection_id) => {
-        fetch("http://localhost:3000/api/v1/move_artwork", {
+        fetch("https://gallerize-api.herokuapp.com/api/v1/move_artwork", {
             method: 'PATCH',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -21,7 +21,7 @@ export default class ArtworkContainer extends Component {
 
 
     handleResizeEvent = (e, ref, artwork, user_selection_id) => {
-        fetch("http://localhost:3000/api/v1/resize_artwork", {
+        fetch("https://gallerize-api.herokuapp.com/api/v1/resize_artwork", {
             method: 'PATCH',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({

@@ -5,7 +5,7 @@ import Caption from '../components/Caption'
 export default class CaptionContainer extends Component {
 
     handleCaptionDrag = (data, caption_id) => {
-        fetch("http://localhost:3000/api/v1/move_caption", {
+        fetch("https://gallerize-api.herokuapp.com/api/v1/move_caption", {
             method: 'PATCH',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -20,7 +20,7 @@ export default class CaptionContainer extends Component {
 
 
     handleCaptionResize = (ref, caption_id) => {
-        fetch("http://localhost:3000/api/v1/resize_caption", {
+        fetch("https://gallerize-api.herokuapp.com/api/v1/resize_caption", {
             method: 'PATCH',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({

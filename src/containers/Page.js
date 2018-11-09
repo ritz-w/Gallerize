@@ -5,7 +5,7 @@ import ArtSelector from './ArtSelector';
 import Header from '../components/Header'
 import GalleryWallContainer from './GalleryWallContainer'
 import Fullscreen from "react-full-screen";
-// import ThreeDViewer from './ThreeDViewer'
+import ThreeDimContainer from './ThreeDimContainer';
 
 
 export default class Page extends Component {
@@ -22,12 +22,13 @@ export default class Page extends Component {
             nextButtonShown: true,
             artSelectorShown: true,
             isFull: false,
+            threeDimView: false,
             currentWall: 1
         }
     }
 
     componentDidMount() {
-        fetch('http://localhost:3000/api/v1/artworks')
+        fetch('https://gallerize-api.herokuapp.com/api/v1/artworks')
         .then(res => res.json())
         .then(data => this.setState({ artworks: data }))
         .then(() => {
@@ -71,7 +72,7 @@ export default class Page extends Component {
     
 
     updateGalleries = () => {
-        fetch(`http://localhost:3000/api/v1/users/${this.props.currentUserId}/galleries`)
+        fetch(`https://gallerize-api.herokuapp.com/api/v1/users/${this.props.currentUserId}/galleries`)
         .then(res => res.json())
         .then(galleryData => this.props.setGalleriesState(galleryData), () => console.log(this.props.galleries))
     }
@@ -90,7 +91,7 @@ export default class Page extends Component {
     }
 
     selectArtwork = (artwork, wallId) => {
-        fetch("http://localhost:3000/api/v1/add_artwork", {
+        fetch("https://gallerize-api.herokuapp.com/api/v1/add_artwork", {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -105,7 +106,7 @@ export default class Page extends Component {
     }
 
     deleteArtwork = (USId) => {
-        fetch(`http://localhost:3000/api/v1/user_selections/${USId}`, {
+        fetch(`https://gallerize-api.herokuapp.com/api/v1/user_selections/${USId}`, {
             method: 'DELETE'
         }).then(res => res.json())
         .then(data => this.props.setGalleriesState(data))
@@ -113,7 +114,7 @@ export default class Page extends Component {
 
     // //user add, edit, or delete text functions
     addCaption = (wallId, isTitle) => {
-        fetch("http://localhost:3000/api/v1/add_caption", {
+        fetch("https://gallerize-api.herokuapp.com/api/v1/add_caption", {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -125,7 +126,7 @@ export default class Page extends Component {
     }
 
     editCaption = (captionId, captionText) => {
-        fetch(`http://localhost:3000/api/v1/captions/${captionId}/edit`, {
+        fetch(`https://gallerize-api.herokuapp.com/api/v1/captions/${captionId}/edit`, {
             method: 'PATCH',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -137,7 +138,7 @@ export default class Page extends Component {
     }
 
     deleteCaption = (captionId) => {
-        fetch(`http://localhost:3000/api/v1/captions/${captionId}`, {
+        fetch(`https://gallerize-api.herokuapp.com/api/v1/captions/${captionId}`, {
             method: 'DELETE'
         }).then(res => res.json())
         .then(data => this.props.setGalleriesState(data))
@@ -148,6 +149,10 @@ export default class Page extends Component {
         const allWallTitles = {...this.state.titles}
         allWallTitles[wallId] = [...this.state.titles[wallId], titleObj]
         this.setState({titles: allWallTitles}, () => console.log(this.state.titles))
+    }
+
+    switchTo3D = () => {
+        this.state.threeDimView ? this.setState({threeDimView: false}) : this.setState({threeDimView: true})
     }
 
 
@@ -181,28 +186,29 @@ export default class Page extends Component {
     }
 
     renderGalleries = () => {
-        return this.props.currentUser ? 
-            (<Fullscreen
+        if (this.props.currentUser) {
+            return <Fullscreen
                 enabled={this.state.isFull}
                 onChange={isFull => this.setState({isFull})}
                 >
-                <GalleryWallContainer 
-                currentUserId={this.props.currentUserId}
-                galleries={this.props.galleries} 
-                // captions={this.state.captions} 
-                editCaption={this.editCaption} 
-                deleteCaption={this.deleteCaption} 
-                // titles={this.state.titles} 
-                // editTitle={this.editTitle} 
-                // deleteTitle={this.deleteTitle} 
-                deleteArtwork={this.deleteArtwork} 
-                handleWallChange={this.handleWallChange}
-                currentWall={this.state.currentWall}
-                setGalleriesState={this.props.setGalleriesState}
-                />
-            </Fullscreen>)
-                : 
-            (<div>Please Sign In!</div>) 
+                {this.state.threeDimView ? (
+                    <ThreeDimContainer />
+                ) : (
+                    <GalleryWallContainer 
+                    currentUserId={this.props.currentUserId}
+                    galleries={this.props.galleries} 
+                    editCaption={this.editCaption} 
+                    deleteCaption={this.deleteCaption} 
+                    deleteArtwork={this.deleteArtwork} 
+                    handleWallChange={this.handleWallChange}
+                    currentWall={this.state.currentWall}
+                    setGalleriesState={this.props.setGalleriesState}
+                    />
+                )}
+            </Fullscreen>
+        } else {
+           return <div className="please-sign-in">Please Sign In! 🎨</div>
+        }
     }
 
 
@@ -221,6 +227,8 @@ export default class Page extends Component {
                     addTitle={this.addTitle}
                     currentWall={this.state.currentWall}
                     galleries={this.props.galleries} 
+                    switchTo3D={this.switchTo3D}
+                    threeDimView={this.state.threeDimView}
                     />
                 {this.renderArtSelector()}
                 </div>

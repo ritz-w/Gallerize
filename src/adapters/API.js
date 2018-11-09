@@ -42,7 +42,7 @@ class API {
   }
 }
 
-API.baseURL = 'http://localhost:3000/api/v1'
+API.baseURL = 'https://gallerize-api.herokuapp.com/api/v1'
 API.signinURL = API.baseURL + '/signin'
 API.validateURL = API.baseURL + '/validate'
 API.itemsURL = API.baseURL + '/items'

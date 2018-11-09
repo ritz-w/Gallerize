@@ -16,7 +16,7 @@ class App extends Component {
   }
 
   signin = user => {
-    fetch(`http://localhost:3000/api/v1/users/${user.id}/galleries`)
+    fetch(`https://gallerize-api.herokuapp.com/api/v1/users/${user.id}/galleries`)
     .then(res => res.json())
     .then(galleryData => {
       console.log(galleryData)
