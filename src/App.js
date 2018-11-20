@@ -15,13 +15,15 @@ class App extends Component {
     this.setState({galleries: galleryData}, () => console.log(this.state.galleries))
   }
 
-  signin = user => {
-    fetch(`https://gallerize-api.herokuapp.com/api/v1/users/${user.id}/galleries`)
-    .then(res => res.json())
-    .then(galleryData => {
-      console.log(galleryData)
-      this.setState({galleries: galleryData, currentUser: user.email, currentUserId: user.id})
-    })
+  signin = (user) => {
+    user ? (
+      fetch(`https://gallerize-api.herokuapp.com/api/v1/users/${user.id}/galleries`)
+      .then(res => res.json())
+      .then(galleryData => {
+        console.log(galleryData)
+        this.setState({galleries: galleryData, currentUser: user.email, currentUserId: user.id})
+      })
+    ) : null
   }
 
   signout = () => {
@@ -31,11 +33,13 @@ class App extends Component {
 
   componentDidMount () {
     const token = localStorage.getItem('token')
+    console.log(token)
     if (token) {
       API.validate(token)
         .then(data => {
+          console.log(data)
           if (data.email) {
-            this.signin(data.email)
+            this.signin(data)
           }
         })
     }
