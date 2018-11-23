@@ -15,6 +15,7 @@ class SignInForm extends React.Component {
 
     API.signin(email, password)
       .then(data => {
+        console.log(data)
         if (data.error) {
           console.log("API",data)
         } else {
