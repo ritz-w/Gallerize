@@ -44,8 +44,8 @@ export default class GalleryWall extends Component {
     render () {
         return (
             <div className="gallery-wall-container">
-            {this.renderSelectedArtworks()}
-            {this.renderCaptions()}
+            {this.props.galleryInfo ? this.renderSelectedArtworks() : null}
+            {this.props.galleryInfo ? this.renderCaptions() : null}
             {/* {this.renderTitles()}  */}
           </div>
         )
