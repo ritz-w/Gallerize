@@ -20,7 +20,6 @@ class API {
         password
       })
     }).then(resp => resp.json())
-    .then(res => console.log(res))
   }
 
   static validate (token) {
