@@ -58,10 +58,10 @@ Recommended usage of the app:
 I would welcome any suggestions or contributions to this project ! When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with me [ritz.wu@outlook.com] before making a change.
 
 ## Credits
-Created with the support of [Sam Barker] (https://github.com/bamsarker) and [Nicolas Marcora] (https://github.com/MinimumViablePerson)
+Created with the support of [Sam Barker](https://github.com/bamsarker) and [Nicolas Marcora](https://github.com/MinimumViablePerson)
 
 ## Contact
 If there is any issue with this app please email [ritz.wu@outlook.com].
 
 ## License
-This project is licensed under the MIT License - © [Ritz Wu](http://www.ritsu.net/) and [Sarah Jacob] (https://github.com/sjacodes)
+This project is licensed under the MIT License - © [Ritz Wu](http://www.ritsu.net/) and [Sarah Jacob](https://github.com/sjacodes)
