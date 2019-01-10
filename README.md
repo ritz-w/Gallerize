@@ -8,16 +8,7 @@ This evolved into an web app where users could sign up for an account where they
 
 The reason it was expanded into three walls was because part of our reach objectives was to see if we could project the three walls onto 3D surfaces. I was able to do this later, by integrating the app with ReactVR. 
 
-## Build status
-Build status of continus integration i.e. travis, appveyor etc. Ex. - 
-
-[![Build Status](https://travis-ci.org/akashnimare/foco.svg?branch=master)](https://travis-ci.org/akashnimare/foco)
-[![Windows Build Status](https://ci.appveyor.com/api/projects/status/github/akashnimare/foco?branch=master&svg=true)](https://ci.appveyor.com/project/akashnimare/foco/branch/master)
- 
-## Screenshots
-
-
-## Tech/framework Used
+## Tech/Frameworks Used
 
 <b>Languages</b>
 - Ruby
@@ -73,6 +64,4 @@ Created with the support of [Sam Barker] (https://github.com/bamsarker) and [Nic
 If there is any issue with this app please email [ritz.wu@outlook.com].
 
 ## License
-A short snippet describing the license (MIT, Apache etc)
-
-MIT © [Ritz Wu, Sarah Jacob](http://www.ritsu.net/)
+This project is licensed under the MIT License - © [Ritz Wu, Sarah Jacob](http://www.ritsu.net/)
