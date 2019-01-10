@@ -1,4 +1,4 @@
-## Project title
+## Gallerize
 Gallerize is a web app allowing users to select artworks from API collections, position them onto virtual walls, and then project it into a 3D space, creating a virtual gallery. Built with React, Rails, and React 360.
 
 ## Background
@@ -64,4 +64,4 @@ Created with the support of [Sam Barker] (https://github.com/bamsarker) and [Nic
 If there is any issue with this app please email [ritz.wu@outlook.com].
 
 ## License
-This project is licensed under the MIT License - © [Ritz Wu, Sarah Jacob](http://www.ritsu.net/)
+This project is licensed under the MIT License - © [Ritz Wu](http://www.ritsu.net/) and [Sarah Jacob] (https://github.com/sjacodes)
